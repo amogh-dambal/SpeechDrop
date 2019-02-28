@@ -41,13 +41,17 @@ public class RoomHandler {
         roomsFile = new File("rooms.json");
         if (!roomsFile.exists()) {
             dataStore = new HashMap<>();
-        } else {
+        }
+        else {
             try {
                 dataStore = mapper.readValue(vertx.fileSystem().readFileBlocking(roomsFile.getPath()).toString(),
                         mapper.getTypeFactory().constructMapType(HashMap.class, String.class, RoomData.class));
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
         }
         roomCache = CacheBuilder.newBuilder()
                 .maximumSize(1000)
